@@ -1,10 +1,9 @@
-const { createRef } = require("react");
-
 $(function () {
   // initialize canvas and context when able to
   canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
   window.addEventListener("load", loadJson);
+
 
   function setup() {
     if (firstTimeSetup) {
@@ -18,51 +17,58 @@ $(function () {
       setInterval(main, 1000 / frameRate);
     }
 
+
     // Create walls - do not delete or modify this code
     createPlatform(-50, -50, canvas.width + 100, 50); // top wall
     createPlatform(-50, canvas.height - 10, canvas.width + 100, 200, "navy"); // bottom wall
     createPlatform(-50, -50, 50, canvas.height + 500); // left wall
     createPlatform(canvas.width, -50, 50, canvas.height + 100); // right wall
 
+
     //////////////////////////////////
     // ONLY CHANGE BELOW THIS POINT //
     //////////////////////////////////
 
+
     // TODO 1 - Enable the Grid
-    // toggleGrid();
-toggleGride();
+    toggleGrid();
+
+
+
 
     // TODO 2 - Create Platforms
-    const platforms = [
-{ id: 'A', x: 300, y: 650, width: 400, height: 20 },
-{ id: 'B', x: 500, y: 600, width: 30, height: 60 },
-{ id: 'C', x: 525, y: 520, width: 125, height: 30 },
-{ id: 'D', x: 800, y: 600, width: 175, height: 25 },
-    ];
+
+
+    createPlatform(300, 650, 50, 50, "red");
+    createPlatform(500, 550, 50, 50, "blue");
+    createPlatform(300, 420, 75, 25, "yellow");
+    createPlatform(600, 300, 75, 10, "purple");
+    createPlatform(800, 210, 25, 25, "orange");
+    createPlatform(1100, 200, 25, 25, "black");
+
 
 
     // TODO 3 - Create Collectables
-const collectables = [
-{ id: 'X', x: 450, y: 340, gravity: 0 },
-{ id: 'Y', x: 1050, y: 510, gravity: 1.2, bounce: 1.2 },
-{ id: 'Z', x: 875, y: 695, gravity: 1.3, bounce: 1.3 },
-];
+    createCollectable("steve", 900, 50);
+    createCollectable("kennedi", 300, 600);
+    createCollectable("diamond", 600, 200);
 
 
-    
+
+
+   
     // TODO 4 - Create Cannons
-const cannons = [
-{ id: 1, type: 'top', location: 730, delay: 1000 },
-{ id: 2, type: 'right', location: 550, delay: 1250 },
-{ id: 3, type: 'bottom', location: 560, delay: 600 },
-];
+    createCannon("poition", 200, 100);
+    createCannon("poition", x, y);
+    createCannon("poition", x, y);
 
-    
-    
+
+   
     //////////////////////////////////
     // ONLY CHANGE ABOVE THIS POINT //
     //////////////////////////////////
   }
+
 
   registerSetup(setup);
 });
