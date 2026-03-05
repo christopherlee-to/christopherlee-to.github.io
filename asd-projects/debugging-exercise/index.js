@@ -45,12 +45,12 @@ function makeGhost(id) {
   var ghost = {};
 
   // this creates some useful variables that are not directly placed in the object
-  var maxX = boardWidth - ghostRadius * 2;
   var maxY = boardHeight - ghostRadius * 2;
+  var maxX = boardWidth - ghostRadius * 2;
 
   // this gives the ghost object all of the data that it needs to store
   ghost.id = "#" + id;
-  ghost.x = Math.random() * maXX + ghostRadius;
+  ghost.x = Math.random() * maxX + ghostRadius;
   ghost.y = Math.random() * maxY + ghostRadius;
   ghost.speedX = decideSpeed();
   ghost.speedY = decideSpeed();
@@ -75,7 +75,7 @@ function makeGhost(id) {
 
 // this generates a random speed value
 function decideSpeed() {
-  return (Math.random() * doubleMaxSpeed) - (doubleMaxSpeed / 2);
+  return (Math.random() * doubleMaxSpeed) / 2 - doubleMaxSpeed;
 }
 
 // this generates an id for a ghost given the ghost's number
