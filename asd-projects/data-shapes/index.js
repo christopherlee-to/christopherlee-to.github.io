@@ -83,7 +83,9 @@ const lastShape = {
 
   function goodDisplay() {
     // TODO 4-b: call your handleGood function
-    handleGood();
+  
+  var currentShape = dataShapes[currentIndex];
+  handleGood(currentShape.color, currentShape.shape, currentShape.repeat);
   }
 
   function badDisplay() {
