@@ -147,3 +147,9 @@ h2, h3 {
     justify-content: center;
   }
 }
+
+#walker {
+  width: 67px;
+  height: 67px;
+  background-color: cyan;
+}

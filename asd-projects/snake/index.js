@@ -10,9 +10,10 @@ var scoreElement = $("#score");
 var highScoreElement = $("#highScore");
 
 // Game Variables
+var apple = {};
 var score = 0; // variable to keep track of the score
 var started = false; // variable to keep track of whether the game has started
-
+const apple = {};
 // TODO 4, Part 1: Create the apple variable
 
 
@@ -51,7 +52,7 @@ function init() {
   
   
   // TODO 4, Part 3: initialize the apple
-
+makeApple();
 
   // TODO 6, Part 1: Initialize the interval
 
@@ -207,9 +208,14 @@ function endGame() {
  */
 function makeApple() {
   // TODO 4, Part 2: Fill in this function's code block
+apple.element = $("<div>").addClass("apple").appendTo(board);
+  
+var randomPosition = getRandomAvailablePosition();
 
+  apple.row = randomPosition.row;
+  apple.column = randomPosition.column;
 
-
+  repositionSquare(apple);
 }
 
 /* Create an HTML element for a snakeSquare using jQuery. Then, given a row and
