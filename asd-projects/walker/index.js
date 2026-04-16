@@ -1,6 +1,6 @@
 /* global $, sessionStorage */
 
-$(document).ready(runProgram); // wait for the HTML / CSS elements of the page to fully load, then execute runProgram()
+$(document).ready(runProgram); 
   
 function runProgram(){
   ////////////////////////////////////////////////////////////////////////////////
@@ -11,7 +11,7 @@ function runProgram(){
   var FRAME_RATE = 60;
   var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
   
-  // Game Item Objects
+  // TODO 3: KEY Object
   const KEY = {
     LEFT: 37,
     UP: 38,
@@ -19,6 +19,7 @@ function runProgram(){
     DOWN: 40,
   };
 
+  // TODO 4: walker Object
   var walker = {
     x: 0,
     y: 0,
@@ -27,41 +28,24 @@ function runProgram(){
   };
 
   // one-time setup
-  var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
+  var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);
 
-  /* 
-  This section is where you set up event listeners for user input.
-  For example, if you wanted to handle a click event on the document, you would replace 'eventType' with 'click', and if you wanted to execute a function named 'handleClick', you would replace 'handleEvent' with 'handleClick'.
-
-  Note: You can have multiple event listeners for different types of events.
-  */
-  $(document).on('keydown', handleEvent);                          
+  // TODO 2 & 8: Register Event Listeners
+  $(document).on('keydown', handleKeyDown);
+  $(document).on('keyup', handleKeyUp);                          
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  /* 
-  On each "tick" of the timer, a new frame is dynamically drawn using JavaScript
-  by calling this function and executing the code inside.
-  */
-   $(document).on('keydown', handleKeyDown);
-  $(document).on('keyup', handleKeyUp);                          
-
   function newFrame() {
-    
-repositionGameItem();
-wallCollision();
-redrawGameItem();
+    repositionGameItem(); // TODO 5
+    wallCollision();      // TODO 9
+    redrawGameItem();     // TODO 6
   }
   
-  /* 
-  This section is where you set up the event handlers for user input.
-  For example, if you wanted to make an event handler for a click event, you should rename this function to 'handleClick', then write the code that should execute when the click event occurs.
-  
-  Note: You can have multiple event handlers for different types of events.
-  */
-   function handleKeyDown(event) {
+  // TODO 7: Set speed when key is pressed
+  function handleKeyDown(event) {
     if (event.which === KEY.LEFT) {
       walker.speedX = -5;
     } else if (event.which === KEY.UP) {
@@ -73,49 +57,53 @@ redrawGameItem();
     }
   }
 
-    function handleKeyUp(event) {
-    // TODO 8: Reset speed to 0 when released
+  // TODO 8: Stop speed when key is released
+  function handleKeyUp(event) {
     if (event.which === KEY.LEFT || event.which === KEY.RIGHT) {
       walker.speedX = 0;
     } else if (event.which === KEY.UP || event.which === KEY.DOWN) {
       walker.speedY = 0;
     }
   }
+
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
- function repositionGameItem() {
-  walker.x += walker.speedX;
-  walker.y += walker.speedY;
- }
+
+  // TODO 5: Calculate new coordinates
+  function repositionGameItem() {
+    walker.x += walker.speedX;
+    walker.y += walker.speedY;
+  }
   
- function redrawGameItem() {
-   $("#walker").css("left", walker.x);    
+  // TODO 6: Update CSS position on screen
+  function redrawGameItem() {
+    $("#walker").css("left", walker.x);    
     $("#walker").css("top", walker.y);
- }
+  }
 
-
+  // TODO 9: Stay within the #board boundaries
   function wallCollision() {
+    // Left boundary
     if (walker.x < 0) { 
       walker.x -= walker.speedX; 
     }
+    // Right boundary (Board Width - Walker Width)
     if (walker.x > $("#board").width() - 50) {
       walker.x -= walker.speedX;
     }
+    // Top boundary
     if (walker.y < 0) {
       walker.y -= walker.speedY;
     }
+    // Bottom boundary (Board Height - Walker Height)
     if (walker.y > $("#board").height() - 50) {
       walker.y -= walker.speedY;
     }
   }
 
   function endGame() {
-    // stop the interval timer
     clearInterval(interval);
-
-    // turn off event handlers
     $(document).off();
   }
-  
 }
