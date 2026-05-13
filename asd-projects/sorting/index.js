@@ -15,11 +15,13 @@ The CSS ids you will work with are:
 
 // TODO 2: Implement bubbleSort
 async function bubbleSort(array) {
-  for (var i = 0; i < array.length; i++) {
-    for (var j = array.length - 1; j > i; j--) {
+  // Iterate over the array from i = 0 to length - 1
+  for (let i = 0; i < array.length; i++) {
+    // Iterate from the end of the array down to i + 1
+    for (let j = array.length - 1; j > i; j--) {
+      // Check if the element at j is smaller than the one before it
       if (array[j].value < array[j - 1].value) {
         swap(array, j, j - 1);
-        
         updateCounter(bubbleCounter);
         await sleep();
       }
@@ -30,11 +32,17 @@ async function bubbleSort(array) {
 
 // TODO 3: Implement quickSort
 async function quickSort(array, left, right) {
+  // Check if the section has more than one element
   if (right - left > 0) {
-    var index = await partition(array, left, right);
- if (left < index - 1) {
+    // Partition the array and get the split index
+    let index = await partition(array, left, right);
+
+    // Recursively sort the left side
+    if (left < index - 1) {
       await quickSort(array, left, index - 1);
     }
+
+    // Recursively sort the right side
     if (index < right) {
       await quickSort(array, index, right);
     }
@@ -49,38 +57,45 @@ async function quickSort(array, left, right) {
  * and returns the index for the next split in quickSort.
  */
 async function partition(array, left, right) {
+  // Select the pivot (middle element value)
   let pivot = array[Math.floor((right + left) / 2)].value;
 
+  // Run as long as left and right pointers haven't crossed
   while (left < right) {
-    
+    // Move left pointer until we find a value >= pivot
     while (array[left].value < pivot) {
       left++;
     }
-
+    
+    // Move right pointer until we find a value <= pivot
     while (array[right].value > pivot) {
       right--;
     }
 
+    // If pointers haven't crossed, swap the elements
     if (left < right) {
       swap(array, left, right);
       updateCounter(quickCounter);
       await sleep();
+      
+      // Crucial: Manually move pointers after swap to prevent infinite loops 
+      // on duplicate values or when both equal the pivot.
+      left++;
+      right--;
     }
   }
 
+  // Return the partition index as requested
   return left + 1;
 }
 
 // TODO 1: Implement swap
 function swap(array, i, j) {
-
-  var temp = array[i];
+  const temp = array[i];
   array[i] = array[j];
   array[j] = temp;
-
   drawSwap(array, i, j);
 }
-
 
 ///////////////////////////////////////////////////////////////////////
 /////////////////////// YOUR WORK GOES ABOVE HERE /////////////////////
